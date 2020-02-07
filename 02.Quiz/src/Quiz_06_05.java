@@ -8,6 +8,7 @@ public class Quiz_06_05 {
 		int num;
 		int sum = 0;
 		
+		System.out.print("숫자를 입력하세요.\n0을 입력하시면 합을 보여드립니다. \n");
 		while(true) {
 			num = sc.nextInt();
 			if(num == 0) {

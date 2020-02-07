@@ -8,8 +8,8 @@ public class Quiz_06_06 {
 		int inum;
 		int num = 0;
 		int dec;
-		int sum = 0;
-		int avg;
+		double sum = 0;
+		double avg;
 		
 		System.out.print("입력하실 정수의 갯수가 몇개입니까? ");
 		for(inum = sc.nextInt(); num < inum; num++) {

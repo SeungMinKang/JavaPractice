@@ -21,7 +21,7 @@ public class Quiz_06_12 {
 			sum = sum + num2;
 			System.out.print(num2 + " = " + sum);
 		}
-		if(num1 > num2) {
+		else if(num1 > num2) {
 			while(num2 < num1) {
 				System.out.print(num1 + " + ");
 				sum = sum + num1;
@@ -29,6 +29,10 @@ public class Quiz_06_12 {
 			}
 			sum = sum + num1;
 			System.out.print(num1 + " = " + sum);
+		}
+		else {
+			sum = num1 + num2;
+			System.out.printf("%d + %d = %d",num1, num2, sum);
 		}
 	}
 }

@@ -10,6 +10,7 @@ public class Quiz_06_05 {
 		
 		System.out.print("숫자를 입력하세요.\n0을 입력하시면 합을 보여드립니다. \n");
 		while(true) {
+			System.out.print("숫자: ");
 			num = sc.nextInt();
 			if(num == 0) {
 				System.out.println("입력한 모든 수의 합은 " + sum + " 입니다.");

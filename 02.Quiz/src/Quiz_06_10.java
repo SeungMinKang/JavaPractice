@@ -24,6 +24,18 @@ public class Quiz_06_10 {
 				break;
 			}
 		}
+		
+//		int sum = 0;
+//		int i = 0;
+//		while(i < 5) {
+//			System.out.println("숫자 : ");
+//			int num = sc.nextInt();
+//			if(num > 0) {
+//				sum = sum + num;
+//				i++;
+//			}
+//		}
+		
 		System.out.printf("5개 정수의 합은 %d 입니다.", sum);
 	}
 }

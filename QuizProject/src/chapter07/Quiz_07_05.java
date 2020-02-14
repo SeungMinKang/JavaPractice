@@ -4,34 +4,40 @@ import java.util.Scanner;
 public class Quiz_07_05 {
 	public static void main(String[] args) {
 		Scanner sc = new Scanner(System.in);
+		String[] ask = new String[3];
+		ask[0] = new String("정수를 입력하세요: ");
+		ask[1] = new String("정수를 입력하세요: ");
+		ask[2] = new String("정수를 입력하세요: ");
 
+		int[] num = new int[3];
+		int zero = 0;
+		
 		int result = 0;
 		
-		while(true) {			
-			System.out.print("정수를 입력하세요: ");
-			int num1 = sc.nextInt();
-			System.out.print("정수를 입력하세요: ");
-			int num2 = sc.nextInt();
-			System.out.print("정수를 입력하세요: ");
-			int num3 = sc.nextInt();
-			if(num3 == 1) {
-				result = plus(num1, num2);
-				System.out.println();
+		while(true) {
+			for(int i = zero; i < 3; i++) {
+				System.out.print(ask[i]);
+				num[i] = sc.nextInt();			
+			}
+			if(num[2] == 1) {
+				result = plus(num[0], num[1]);
 				break;
-			}else if(num3 == 2) {
-				result = minus(num1, num2);
+			}else if(num[2] == 2) {
+				result = minus(num[0], num[1]);
 				break;
-			}else if(num3 == 3) {
-				result = multiply(num1, num2);
+			}else if(num[2] == 3) {
+				result = multiply(num[0], num[1]);
 				break;
-			}else if(num3 == 4) {
-				result = divide(num1, num2);
+			}else if(num[2] == 4) {
+				result = divide(num[0], num[1]);
 				break;
 			}else{
 				System.out.println("마지막 숫자는 1과 4 사이의 숫자를 눌러주세요.");
 			}
 		}
 		System.out.println("결과: " + result);
+		
+		sc.close();
 	}
 
 	public static int plus(int num1, int num2) {

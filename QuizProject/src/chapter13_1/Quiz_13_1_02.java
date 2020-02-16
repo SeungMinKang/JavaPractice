@@ -1,5 +1,5 @@
 package chapter13_1;
-// 완료
+
 public class Quiz_13_1_02 {
 
 	public static void main(String[] args) {

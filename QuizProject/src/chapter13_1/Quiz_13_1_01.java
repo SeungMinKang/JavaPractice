@@ -2,8 +2,7 @@ package chapter13_1;
 
 import java.util.Scanner;
 
-public class Quiz_13_1_01 {
-	
+public class Quiz_13_1_01 {	
 	public static int Min(int[] num) {
 		int min = num[0];
 		

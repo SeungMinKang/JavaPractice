@@ -24,5 +24,4 @@ public class Quiz_13_1_05 {
 		}
 		sc.close();
 	}
-
 }

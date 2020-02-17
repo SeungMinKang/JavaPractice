@@ -10,5 +10,9 @@ public class Quiz_13_1_02 {
 			str = str + chr[i];
 		}
 		System.out.println(str);
+		
+//		for(int i=0; i < chr.length; i++) {
+//			System.out.print(chr[i]);
+//		}
 	}
 }

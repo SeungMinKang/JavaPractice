@@ -2,7 +2,7 @@ package chapter13_1;
 
 import java.util.Scanner;
 
-public class Quiz_13_1_01 {	
+public class Quiz_13_1_01 {
 	public static int Min(int[] num) {
 		int min = num[0];
 		
@@ -26,6 +26,10 @@ public class Quiz_13_1_01 {
 	}
 
 	public static void main(String[] args) {
+		// 길이가 5인 int형 배열 선언
+		// 사용자로부터 5개의 정수를 입력 받는다.
+		// 함수로 정의해서 최대값, 최소값, 모든 수의 합을 구하라.
+		
 		Scanner sc = new Scanner(System.in);
 		int[] num = new int[5];
 		int sum = 0;

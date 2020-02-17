@@ -21,7 +21,8 @@ class Quiz_13_2_09{
 class ArraySet {
 	Scanner sc = new Scanner(System.in);
 	int[] ar1 = new int[5];
-	int temp = 0;
+	int temp = 0;		// temp 변수를 이용하여 두 값의 위치를 바꿀 때
+						// 임시저장소로 활용
 	
 	int i = 0;
 		

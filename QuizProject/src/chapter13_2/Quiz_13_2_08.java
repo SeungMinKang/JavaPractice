@@ -19,7 +19,24 @@ public class Quiz_13_2_08 {
 		paper = grade;
 		sheet(paper);
 		
-		sc.close();		
+		sc.close();
+		
+//		for(int i=0; i <4; i++) {
+//			switch (i) {
+//			case 0:
+//				System.out.print("4명의 국어 점수 입력");
+//				break;
+//			case 1:
+//				System.out.print("4명의 영어 점수 입력");
+//				break;
+//			case 2:
+//				System.out.print("4명의 수학 점수 입력");
+//				break;
+//			case 3:
+//				System.out.print("4명의 국사 점수 입력");
+//				break;
+//			}
+//		}
 	}
 	
 	static void say(int num) {

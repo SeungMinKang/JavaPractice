@@ -8,6 +8,17 @@ class Quiz_13_2_09{
 		// 210, 19, 72, 129, 34
 		// 데이터를 정렬하기
 		
+		// hungarian bubble sort를 참고해보자
+		
+//		int[] arr = {210, 19, 72, 129, 34};
+//		for (int i = 0; i<arr.length; i++) {
+//			if(arr[i] > arr[i+1]) {
+//				int tmp = arr[i];
+//				arr[i] = arr[i+1];
+//				arr[i+1] = tmp;
+//			}
+//		}
+		
 		ArraySet arrayset = new ArraySet();
 		
 		for(int i = 0; i < 5; i++) {

@@ -12,6 +12,21 @@ public class Quiz_13_2_10 {
 			arrays.moveNum();
 			arrays.showArray();	
 		}
+		
+		// 선생님의 풀이 방법
+		/*
+		int[][] tmp1 = new int[4][4];
+		int j = 0; 
+		for(int x=0; x<4; x++) {
+			int i = 3;
+			for(int y = 0; y <4; y++) {
+				tmp1[x][y] = arr[i][j];
+				i--;
+			}
+			j++;
+		}
+		*/		
+		
 	}
 }
 

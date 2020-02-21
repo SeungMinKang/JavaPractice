@@ -4,6 +4,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 class Com {
+	int player;
 	int[] com = new int[3];
 	int[] ply = new int[3];
 	int checker = 0;
@@ -24,21 +25,38 @@ class Com {
 			break;
 		}
 	}
-	
+
 	// 플레이어가 숫자를 입력하는 메서드
 	void myNum() {
 		Scanner sc = new Scanner(System.in);
-		
-		System.out.println("세자리 숫자를 입력하세요. ");	// 수를 하나씩 입력해야 정상적으로 작동하는 문제가 있음	// 추후 수정 예정
-		ply[0] = sc.nextInt();
-		for (int i = 1; i < 3; i++) {
-			ply[i] = sc.nextInt();
-			while (ply[i] == ply[0] || ply[i] == ply[i - 1]) {
-				System.out.println("세 숫자는 서로 달라야합니다!");
-				System.out.print((i + 1) + "번째 숫자: ");
-				ply[i] = sc.nextInt();
+		boolean rightnum = false;
+
+		// 숫자를 중복으로 입력하는 경우는 플레이어의 잘못이기 때문에 처리하지 않음
+		while (rightnum != true) {
+			System.out.println("세자리 숫자를 입력하세요. ");
+			player = sc.nextInt();		// 숫자 이외의 문자를 입력하면 오류 발생
+			if (player > 100 && player < 1000) {
+				rightnum = true;
+				break;
 			}
-		}	
+			while (player < 100 || player > 999) {
+				System.out.println("세자리 숫자를 입력해야합니다!");
+				player = sc.nextInt();
+				if (player > 100 && player < 1000) {
+					rightnum = true;
+					break;
+				}
+			}
+		}
+		makeArray();
+	}
+	
+	// 입력 받은 수를 배열에 집어넣는 메서드
+	void makeArray() {
+		for (int i = 2; i >= 0; i--) {
+			ply[i] = (player % 10);
+			player = (player / 10);
+		}
 	}
 
 	// 플레이어가 입력한 숫자를 보여주는 메서드
@@ -53,7 +71,7 @@ class Com {
 	void judgeNum() {
 		int stk = 0;
 		int bal = 0;
-		
+
 		for (int i = 0; i < 3; i++) {
 			for (int j = 0; j < 3; j++) {
 				if (com[i] == ply[j]) {
@@ -67,7 +85,7 @@ class Com {
 			}
 		}
 		System.out.print(stk + " Strike\t" + bal + " Ball\n");
-		if(stk == 3) {
+		if (stk == 3) {
 			System.out.println("YOU WIN!!!");
 		}
 	}
@@ -79,12 +97,12 @@ public class QuizBaseball {
 		Com com = new Com();
 
 		com.comNum();
-		
-		while(true) {
+
+		while (true) {
 			com.myNum();
 			com.showNum();
 			com.judgeNum();
-			if(com.checker == 3)
+			if (com.checker == 3)
 				break;
 		}
 	}

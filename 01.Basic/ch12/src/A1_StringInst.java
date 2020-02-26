@@ -5,7 +5,7 @@ class A1_StringInst {
 	}
 
 	public static void main(String[] args) {
-		// 둘 다 String 인스턴스의 생성을 ㅗ이어지고
+		// 둘 다 String 인스턴스의 생성으로 이어지고
 		// 그 결과 인스턴스의 참조 값이 반환된다.
 		// Debug 모드로 id 살펴보기
 		

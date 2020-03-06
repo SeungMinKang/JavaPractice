@@ -1,0 +1,10 @@
+package ch23;
+
+import java.time.ZoneId;
+
+class B1_ZoneIdDemo1 {
+	public static void main(String[] args) {
+		ZoneId paris = ZoneId.of("Europe/Paris");
+		System.out.println(paris);
+	}
+}

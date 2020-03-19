@@ -18,7 +18,7 @@ public class MultiClient {
 		
 		try {
 			//String ServerIP = "localhost";
-			Socket socket = new Socket(args[0], 9999);	// 소켓 객체 생성
+			Socket socket = new Socket(args[0], 9999);	// 소켓 객체 생성 (괄호 안은 포트 번호)
 			System.out.println("서버와 연결이 되었습니다......");
 			
 			out = new PrintWriter(socket.getOutputStream(), true);

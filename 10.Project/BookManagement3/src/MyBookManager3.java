@@ -64,25 +64,21 @@ public class MyBookManager3 {
 		System.out.println("1. 도서 등록");
 		System.out.println("2. 도서 조회");
 		System.out.println("3. 전체 도서 리스트 조회");
-		System.out.println("4. 도서 삭제");
+		System.out.println("4. 손상 도서 삭제");
 		System.out.println("5. 종료");
 		System.out.print("선택 : ");
 	}
 
 	public void addBook() {
-		System.out.print("번호 : ");
-		int bno = sc.nextInt();
-		sc.nextLine();
 		System.out.print("제목 : ");
 		String bname = sc.nextLine();
 		System.out.print("권수 : ");
 		int bstock = sc.nextInt();
 		try {
-			String sql = "insert into BOOKLIST" + "    values (?, ?, ?)";
+			String sql = "insert into BOOKLIST" + "    values (bno_seq.nextval, ?, ?)";
 			pstmt1 = con.prepareStatement(sql);
-			pstmt1.setInt(1, bno);
-			pstmt1.setString(2, bname);
-			pstmt1.setInt(3, bstock);
+			pstmt1.setString(1, bname);
+			pstmt1.setInt(2, bstock);
 			pstmt1.executeQuery();
 			System.out.println("데이터베이스에 추가되었습니다.");
 		} catch (SQLException sqle) {
@@ -113,7 +109,8 @@ public class MyBookManager3 {
 	
 	public void selAllBook() {
 		try {
-			String sql = "select * from BOOKLIST";
+			String sql = "select * from BOOKLIST"
+					   + " order by bno";
 			pstmt3 = con.prepareStatement(sql);
 			ResultSet rs = pstmt3.executeQuery();
 			while (rs.next()) {
@@ -130,18 +127,37 @@ public class MyBookManager3 {
 	public void delBook() {
 		System.out.print("[삭제] 제목 : ");
 		String bname = sc.nextLine();
+		System.out.print("[삭제] 권수 : ");
+		int s_del = sc.nextInt();
 		try {
-			String sql = "delete BOOKLIST"
+			// 데이터베이스에서 삭제할 책의 권수를 받아옴
+			String sql = "select bstock from BOOKLIST"
 					   + " where bname = ?";
 			pstmt4 = con.prepareStatement(sql);
 			pstmt4.setString(1, bname);
+			ResultSet rs = pstmt4.executeQuery();
+			int s_current = 0;
+			while(rs.next()) {
+				s_current = rs.getInt("BSTOCK");
+			}
+			
+			int s_result = s_current - s_del;
+			
+			sql = "update BOOKLIST"
+				+ "   set bstock = ?"
+				+ " where bname = ?";
+			pstmt4 = con.prepareStatement(sql);
+			pstmt4.setInt(1, s_result);
+			pstmt4.setString(2, bname);
 			pstmt4.executeQuery();
 			System.out.println("삭제가 완료되었습니다.");
 		} catch (SQLException sqle) {
+			sqle.printStackTrace();
 			System.out.println("삭제 에러가 발생했습니다.");
 		}
 	}
 
+	// 데이터베이스에 연결하기 위한 메소드
 	public void connectDatabase() {
 		try {
 			con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "scott", "tiger");

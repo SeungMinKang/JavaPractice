@@ -247,11 +247,11 @@ public class RentalList {
 				bno = rs.getInt("BNO");
 				amount = rs.getInt("AMOUNT");
 				checkShelf(bno, bname, amount, mid);
-				checkBlacklist(mid);
 			}
 			//RentalDB의 returndate을 업데이트하기.
 			sql = "update RentalDB"
 				+ "   set returndate = sysdate"
+//				+ "   set returndate = to_date('20-04-25', 'YY-MM-DD')"		test용 코드
 				+ " where mid = ?"
 				+ "   and bname = ?"
 				+ "   and returndate is null";
@@ -259,6 +259,7 @@ public class RentalList {
 			pstmt2.setString(1, mid);
 			pstmt2.setString(2, bname);
 			pstmt2.executeUpdate();
+			checkBlacklist(mid);
 		} catch (SQLException sqle) {
 			System.out.println("반납 중 오류가 발생했습니다.");
 		}

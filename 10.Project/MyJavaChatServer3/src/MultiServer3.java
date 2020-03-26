@@ -7,11 +7,14 @@ import java.net.Socket;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.Map;
+
+import javax.swing.text.Document;
 
 public class MultiServer3 {
 	static {
@@ -101,6 +104,32 @@ public class MultiServer3 {
 			}
 		}
 	}
+	
+	// 같은 방 번호의 클라이언트들에게 메시지를 전달.
+	public void sendRoomMsg(String user, String msg) {
+		// 방번호를 가져오는 메소드를 만들어 int 형에 저장.
+		int rno = rnoMatch(user);
+		int otherno = 0;
+		// 출력스트림을 순차적으로 얻어와서 해당 메시지를 출력한다.
+		Iterator<String> it = clientMap.keySet().iterator();
+
+		while (it.hasNext()) {
+			try {
+				String next = it.next();
+				String id = (String)next;
+				otherno = rnoMatch(id);
+				if(rno == otherno) {
+					PrintWriter it_out = (PrintWriter) clientMap.get(next);
+					if (user.equals(""))
+						it_out.println(msg);
+					else
+						it_out.println("[" + user + "] " + msg);
+				}
+			} catch (Exception e) {
+				System.out.println("예외" + e);
+			}
+		}
+	}
 
 	public static void main(String[] args) {
 		// 서버 객체 생성
@@ -139,10 +168,13 @@ public class MultiServer3 {
 									// 클라이언트가 사용할 이름이다.
 				saveUserOnServer(id);
 
-				sendAllMsg("", id + "님이 입장하셨습니다.");
+//				sendAllMsg("", id + "님이 입장하셨습니다.");
+				sendRoomMsg("", "===============================\n"
+					     + id + "님이 입장하셨습니다.\n"
+					     + "===============================");
 
 				// 현재 객체가 가지고 있는 소켓을 제외하고 다른 소켓(클라이언트)들에게 접속을 알림
-				clientMap.put(id, out); // 해쉬맵에 키를 name으로 출력스트림 객체를 저장.
+				clientMap.put(id, out); // 해쉬맵에 키를 id로 출력스트림 객체를 저장.
 				System.out.println("현재 접속자 수는 " + clientMap.size() + "명 입니다.");
 
 				// 입력스트림이 null이 아니면 반복.
@@ -152,10 +184,12 @@ public class MultiServer3 {
 					s = in.readLine();
 					System.out.println(s);
 					if (s.substring(0, 1).equals("/")) {
-						if (s.equals("/list"))
-							comm.list(out, clientMap);
-					} else
-						sendAllMsg(id, s);
+						comm.menu(out, clientMap, s, id);
+					} else {
+//						sendAllMsg(id, s);
+						s = comm.censorWords(s);
+						sendRoomMsg(id, s);
+					}
 				}
 			} catch (Exception e) {
 //				System.out.println("예외:"+e);
@@ -164,7 +198,9 @@ public class MultiServer3 {
 				// 보통 종료하거나 나가면 java.net.SocketException: 예외 발생
 				removeUserOnServer(id);
 				clientMap.remove(id);
-				sendAllMsg("", id + "님이 퇴장하셨습니다.");
+				sendRoomMsg("", "===============================\n"
+						     + id + "님이 퇴장하셨습니다.\n"
+						     + "===============================");
 				System.out.println("현재 접속자 수는 " + clientMap.size() + "명 입니다.");
 
 				try {
@@ -192,9 +228,15 @@ public class MultiServer3 {
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 			System.out.println("알 수 없는 에러가 발생했습니다.");
+		} finally {
+			try {
+				if(pstmt3 != null) pstmt3.close();
+				if(con != null) con.close();
+			} catch (SQLException sqle) {}
 		}
 	}
 
+	// 접속을 종료한 사용자 정보를 chatServerDB에서 제거하는 메소드
 	public void removeUserOnServer(String id) {
 		connectDatabase();
 		try {
@@ -206,6 +248,37 @@ public class MultiServer3 {
 		} catch (SQLException sqle) {
 			sqle.printStackTrace();
 			System.out.println("알 수 없는 에러가 발생했습니다.");
+		} finally {
+			try {
+				if(pstmt3 != null) pstmt3.close();
+				if(con != null) con.close();
+			} catch (SQLException sqle) {}
 		}
+	}
+	
+	// 사용자의 방번호를 가져오는 메서드
+	public int rnoMatch(String id) {
+		connectDatabase();
+		int rno = 0;
+		try {
+			String sql = "select rno from chatserver"
+					   + " where id = ?";
+			pstmt3 = con.prepareStatement(sql);
+			pstmt3.setString(1, id);
+			ResultSet rs = pstmt3.executeQuery();
+			if (rs.next()) {
+				rno = rs.getInt("RNO");
+			}
+			rs.close();
+		} catch (SQLException sqle) {
+			sqle.printStackTrace();
+			System.out.println("알 수 없는 에러가 발생했습니다.");
+		} finally {
+			try {
+				if(pstmt3 != null) pstmt3.close();
+				if(con != null) con.close();
+			} catch (SQLException sqle) {}
+		}
+		return rno;
 	}
 }
